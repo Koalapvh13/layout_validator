@@ -1,0 +1,13 @@
+{
+    "name": "matheusdv/layout_validator",
+    "description": "Script para validar layouts de importa\u0000\u0000o de vidas do sistema INFOMED Benner.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matheus Dias Vieira",
+            "email": "matheuspvh13@gmail.com"
+        }
+    ],
+    "require": {}
+}
