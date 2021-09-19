@@ -30,7 +30,8 @@ class LayoutValidator
     private function checkDependencia($index)
     {
         $dependencia = $this->vidas[$index];
-        return is_numeric($dependencia);
+        $dep_valida = intval($dependencia) < 100 && intval($dependencia) >=0;
+        return is_numeric($dependencia) ? $dep_valida : false;
     }
 
     public function validadar()
