@@ -24,7 +24,7 @@ class LayoutValidator
 
     private function checkFamilia($index)
     {
-        return count($this->vidas[$index]) > 0;
+        return strlen($this->vidas[$index]) > 0;
     }
 
     private function checkDependencia($index)
@@ -44,6 +44,16 @@ class LayoutValidator
         $conteudo = preg_replace('/[úùûü]/ui', 'u', $conteudo);
         $conteudo = preg_replace('/[ç]/ui', 'c', $conteudo);
         return $conteudo == $nome;
+    }
+
+    private function checkData($index)
+    {
+        $data = $this->vidas[$index] ?? '00112222';
+        $dia = substr($data,0,1);
+        $mes = substr($data,2,3);
+        $ano = substr($data,4,7);
+        $dataValida = checkdate($mes, $dia, $ano);
+        return strlen($data) > 0 ? $dataValida : false;
     }
 
     public function validadar()
