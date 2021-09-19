@@ -34,6 +34,18 @@ class LayoutValidator
         return is_numeric($dependencia) ? $dep_valida : false;
     }
 
+    private function checkNome($index)
+    {
+        $nome = $this->vidas[$index];
+        $conteudo = preg_replace('/[áàãâä]/ui', 'a', $nome); 
+        $conteudo = preg_replace('/[éèêë]/ui', 'e', $conteudo);
+        $conteudo = preg_replace('/[íìîï]/ui', 'i', $conteudo);
+        $conteudo = preg_replace('/[óòõôö]/ui', 'o', $conteudo);
+        $conteudo = preg_replace('/[úùûü]/ui', 'u', $conteudo);
+        $conteudo = preg_replace('/[ç]/ui', 'c', $conteudo);
+        return $conteudo == $nome;
+    }
+
     public function validadar()
     {
         $qtd_vidas = count($this->vidas);
