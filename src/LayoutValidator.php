@@ -16,6 +16,11 @@ class LayoutValidator
         return strlen($codigoContrato) == self::TAMANHO_CODIGO_CONTRATO;
     }
 
+    public function checkEmpresa($index)
+    {
+        return count($this->vidas[$index]) > 0;
+    }
+
     private function checkQtdCampos($index)
     {
         return count($this->vidas[$index]) == self::QUANTIDADE_CAMPOS;
@@ -31,3 +36,4 @@ class LayoutValidator
 
         }
     }
+}
