@@ -92,6 +92,31 @@ class LayoutValidator
         return true;
     }
 
+    private function checkRG($index)
+    {
+        //RG está preenchido e os campos 09, 34, 35, 49 também. Caso o RG não conste, os campos 09, 34, 35, 49 também estarão vazios.
+        $rg = $this->vidas[$index];
+        return strlen($rg) > 0;
+    }
+
+    private function checkUfRG($index)
+    {
+        $uf_rg = $this->vidas[$index];
+        return strlen($uf_rg) > 0;
+    }
+
+    private function checkOrgEmissorRG($index)
+    {
+        $orgEmissor = $this->vidas[$index];
+        return strlen($orgEmissor) > 0;
+    }
+
+    private function checkPaisEmissorRG($index)
+    {
+        $paisEmissor = $this->vidas[$index];
+        return strlen($paisEmissor) == 3;
+    }
+
     public function validadar()
     {
         $qtd_vidas = count($this->vidas);
@@ -99,6 +124,8 @@ class LayoutValidator
         for ($i = 0; $i < $qtd_vidas; $i++) {
             $qtd_campos = $this->checkQtdCampos($i);
             echo $qtd_campos ? null : "Quantidade de campos diferente do esperado!";
+
+            //RG, Testa 09, 34, 35 e 49 junto
         }
     }
 }
