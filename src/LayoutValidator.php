@@ -16,7 +16,7 @@ class LayoutValidator
         return strlen($codigoContrato) == self::TAMANHO_CODIGO_CONTRATO;
     }
 
-    public function checkEmpresa($index)
+    public function checkFamilia($index)
     {
         return count($this->vidas[$index]) > 0;
     }
