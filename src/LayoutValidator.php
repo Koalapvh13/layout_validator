@@ -11,19 +11,26 @@ class LayoutValidator
         $this->vidas = $vidas;
     }
     
-    public function checkContrato($codigoContrato)
-    {
-        return strlen($codigoContrato) == self::TAMANHO_CODIGO_CONTRATO;
-    }
-
-    public function checkFamilia($index)
-    {
-        return count($this->vidas[$index]) > 0;
-    }
 
     private function checkQtdCampos($index)
     {
         return count($this->vidas[$index]) == self::QUANTIDADE_CAMPOS;
+    }
+
+    private function checkContrato($codigoContrato)
+    {
+        return strlen($codigoContrato) == self::TAMANHO_CODIGO_CONTRATO;
+    }
+
+    private function checkFamilia($index)
+    {
+        return count($this->vidas[$index]) > 0;
+    }
+
+    private function checkDependencia($index)
+    {
+        $dependencia = $this->vidas[$index];
+        return is_numeric($dependencia);
     }
 
     public function validadar()
