@@ -117,7 +117,7 @@ class LayoutValidator
         return strlen($paisEmissor) == 3;
     }
 
-    public function validadar()
+    public function validar()
     {
         $qtd_vidas = count($this->vidas);
         $erros = [];
