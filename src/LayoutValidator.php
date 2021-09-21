@@ -49,9 +49,9 @@ class LayoutValidator
     private function checkData($index, $campo)
     {
         $data = $this->vidas[$index][$campo];
-        $dia = substr($data, 0, 1);
-        $mes = substr($data, 2, 3);
-        $ano = substr($data, 4, 7);
+        $dia = (int) substr($data, 0, 1);
+        $mes = (int) substr($data, 2, 3);
+        $ano = (int) substr($data, 4, 7);
         $dataValida = checkdate($mes, $dia, $ano);
         return strlen($data) > 0 ? $dataValida : false;
     }
