@@ -24,15 +24,22 @@ function txtToArray($file_path)
     
 }
 
-$file = $_FILES['sendtxt']['tmp_name'];
-
+$file = $_FILES['sendtxt'];
+$path = $file['tmp_name'];
 $is_valid = validaInput($file);
 
 
 if ($is_valid) {
-    $arrVidas = txtToArray($file);
+    $arrVidas = txtToArray($path);
     $validador = new LayoutValidator($arrVidas);
-    $validacao = $validador->validadar();
+    $validacao = $validador->validar();
+    
+    echo "<h1>".$validacao["qtdErros"]." Erros encontrados!</h1>";
+    echo "<ul>";
+    foreach ($validacao["erros"] as $erro) {
+        echo "<li>".$erro."</li>";
+    }
+    echo "</ul>";
     //header('Location: /layout_validator/?err=5');
 } else {
     //header('Location: /erro.php');
