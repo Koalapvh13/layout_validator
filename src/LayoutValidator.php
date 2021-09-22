@@ -125,6 +125,7 @@ class LayoutValidator
 
         for ($i = 0; $i < $qtd_vidas; $i++) {
             $linha = $i + 1;
+            $linha = $linha < 10 ? "0".$linha : $linha;
             $qtd_campos = $this->checkQtdCampos($i);
             $errosInicio = count($erros);
             if(!$qtd_campos){
