@@ -162,10 +162,10 @@ class LayoutValidator
                 $dataExpedicaoRG ? null : array_push($erros, "Linha ".$linha.": Data de Expedição do RG Inválida.\n");
             } else{
                 array_push($erros, "Linha ".$linha.": Número do RG não informado.\n");
-                $ufRG ? null : array_push($erros, "Linha ".$linha.": UF do RG preenchido, mas RG não informado.\n");
-                $orgEmissorRG ? null : array_push($erros, "Linha ".$linha.": Orgão Emissor preenchido, mas RG não informado.\n");
-                $paisEmissor ? null : array_push($erros, "Linha ".$linha.": País Emissor do RG preenchido, mas RG não informado..\n");
-                $dataExpedicaoRG ? null : array_push($erros, "Linha ".$linha.": Data de Expedição do RG preenchida, mas RG não informado.\n");
+                $ufRG ? array_push($erros, "Linha ".$linha.": UF do RG preenchido, mas RG não informado.\n") : null;
+                $orgEmissorRG ? array_push($erros, "Linha ".$linha.": Orgão Emissor preenchido, mas RG não informado.\n") : null;
+                $paisEmissor ? array_push($erros, "Linha ".$linha.": País Emissor do RG preenchido, mas RG não informado..\n") : null;
+                $dataExpedicaoRG ? array_push($erros, "Linha ".$linha.": Data de Expedição do RG preenchida, mas RG não informado.\n") : null;
             }
             $qtdErros = $qtdErros + (count($erros) - $errosInicio);
         }
