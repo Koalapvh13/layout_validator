@@ -138,6 +138,48 @@ class LayoutValidator
         return is_numeric($dependencia) ? $dep_valida : false;
     }
 
+    private function checkNomeLogradouro($index, $campo)
+    {
+        $nome = $this->vidas[$index][$campo];
+        $conteudo = preg_replace('/[áàãâä]/ui', 'a', $nome);
+        $conteudo = preg_replace('/[éèêë]/ui', 'e', $conteudo);
+        $conteudo = preg_replace('/[íìîï]/ui', 'i', $conteudo);
+        $conteudo = preg_replace('/[óòõôö]/ui', 'o', $conteudo);
+        $conteudo = preg_replace('/[úùûü]/ui', 'u', $conteudo);
+        $conteudo = preg_replace('/[ç]/ui', 'c', $conteudo);
+        return $conteudo == $nome;
+    }
+
+    private function checkNumeroLogradouro($index, $campo)
+    {
+        $numero = $this->vidas[$index][$campo];
+        return is_numeric($numero);
+    }
+
+    private function checkBairro($index, $campo)
+    {
+        $bairro = $this->vidas[$index][$campo];
+        return strlen($bairro) > 0;
+    }
+
+    private function checkMunicipio($index, $campo)
+    {
+        $municipio = $this->vidas[$index][$campo];
+        return strlen($municipio) > 0;
+    }
+
+    private function checkUF($index, $campo)
+    {
+        $uf = $this->vidas[$index][$campo];
+        return strlen($uf) > 0;
+    }
+
+    private function checkCEP($index, $campo)
+    {
+        $cep = $this->vidas[$index][$campo];
+        return preg_match('/^[0-9]{5,5}([- ]?[0-9]{3,3})?$/', $cep);
+    }
+
     public function validar()
     {
         $qtd_vidas = count($this->vidas);
@@ -172,6 +214,12 @@ class LayoutValidator
             $contratoTitular = $this->checkContratoTitular($i, 11, 0);
             $familiaTitular = $this->checkFamiliaTitular($i, 12, 1);
             $dependenciaTitular = $this->checkDependenciaTitular($i, 13);
+            $nomeLogradouro = $this->checkNomeLogradouro($i, 15);
+            $numeroLogradouro = $this->checkNumeroLogradouro($i, 16);
+            $bairro = $this->checkBairro($i, 17);
+            $municipio = $this->checkMunicipio($i, 19);
+            $uf = $this->checkUF($i, 20);
+            $cep = $this->checkCEP($i, 21);
 
             $contrato ? null : array_push($erros, "Linha ".$linha.": Contrato inválido.\n");
             $familia ? null : array_push($erros, "Linha ".$linha.": O número da família deve ser informado.\n");
@@ -198,7 +246,12 @@ class LayoutValidator
             $contratoTitular ? null : array_push($erros, "Linha ".$linha.": O contrato do titular deve ser igual ao do beneficiário.\n");
             $familiaTitular ? null : array_push($erros, "Linha ".$linha.": A família deve ser igual a do beneficiário.\n");
             $dependenciaTitular ? null : array_push($erros, "Linha ".$linha.": A dependência do titular deve ser obrigatoriamente 00.\n");
-            
+            $nomeLogradouro ? null : array_push($erros, "Linha ".$linha.": O nome do logradouro não deve conter acentos e/ou caracteres especiais.\n");
+            $numeroLogradouro ? null : array_push($erros, "Linha ".$linha.": O número do logradouro deve ser um número.\n");
+            $bairro ? null : array_push($erros, "Linha ".$linha.": Bairro não informado.\n");
+            $municipio ? null : array_push($erros, "Linha ".$linha.": Município não informado.\n");
+            $uf ? null : array_push($erros, "Linha ".$linha.": UF não informado.\n");
+            $cep ? null : array_push($erros, "Linha ".$linha.": CEP Inválido.\n");
             $qtdErros = $qtdErros + (count($erros) - $errosInicio);
         }
 
