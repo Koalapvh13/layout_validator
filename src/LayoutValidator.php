@@ -117,6 +117,27 @@ class LayoutValidator
         return strlen($paisEmissor) == 3;
     }
 
+    private function checkContratoTitular($index, $campo_titular, $campo_benef)
+    {
+        $beneficiario = $this->vidas[$index][$campo_benef];
+        $titular = $this->vidas[$index][$campo_titular];
+        return $titular == $beneficiario;
+    }
+
+    private function checkFamiliaTitular($index, $campo_titular, $campo_benef)
+    {
+        $beneficiario = $this->vidas[$index][$campo_benef];
+        $titular = $this->vidas[$index][$campo_titular];
+        return $titular == $beneficiario;
+    }
+
+    private function checkDependenciaTitular($index, $campo)
+    {
+        $dependencia = $this->vidas[$index][$campo];
+        $dep_valida = intval($dependencia) == 0;
+        return is_numeric($dependencia) ? $dep_valida : false;
+    }
+
     public function validar()
     {
         $qtd_vidas = count($this->vidas);
@@ -147,6 +168,11 @@ class LayoutValidator
             $paisEmissor = $this->checkPaisEmissorRG($i, 34);
             $dataExpedicaoRG = $this->checkData($i, 48);
 
+            //validacoes02
+            $contratoTitular = $this->checkContratoTitular($i, 11, 0);
+            $familiaTitular = $this->checkFamiliaTitular($i, 12, 1);
+            $dependenciaTitular = $this->checkDependenciaTitular($i, 13);
+
             $contrato ? null : array_push($erros, "Linha ".$linha.": Contrato inválido.\n");
             $familia ? null : array_push($erros, "Linha ".$linha.": O número da família deve ser informado.\n");
             $dependencia ? null : array_push($erros, "Linha ".$linha.": A dependência informada não existe.\n");
@@ -168,6 +194,11 @@ class LayoutValidator
                 $paisEmissor ? array_push($erros, "Linha ".$linha.": País Emissor do RG preenchido, mas RG não informado.\n") : null;
                 $dataExpedicaoRG ? array_push($erros, "Linha ".$linha.": Data de Expedição do RG preenchida, mas RG não informado.\n") : null;
             }
+
+            $contratoTitular ? null : array_push($erros, "Linha ".$linha.": O contrato do titular deve ser igual ao do beneficiário.\n");
+            $familiaTitular ? null : array_push($erros, "Linha ".$linha.": A família deve ser igual a do beneficiário.\n");
+            $dependenciaTitular ? null : array_push($erros, "Linha ".$linha.": A dependência do titular deve ser obrigatoriamente 00.\n");
+            
             $qtdErros = $qtdErros + (count($erros) - $errosInicio);
         }
 
